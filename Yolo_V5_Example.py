@@ -15,3 +15,5 @@ print(results)
 print(results.pandas().xyxy[0])
 # Show the output image
 results.show()
+# We can save the image output with bounding box
+results.save()
