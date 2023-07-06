@@ -32,16 +32,21 @@ while True:
     # Output = [[x, y, h, w]]
 
     # Inside the face we have to calculate the smile
-    for x, y, w, h in face:
-        cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 3)
-        crop_face = frame[y:y + h, x:x + w]
+    for x_f, y_f, w_f, h_f in face:
+        # Mark the face
+        cv2.rectangle(frame, (x_f, y_f), (x_f + w_f, y_f + h_f), (0, 255, 0),
+                      3)
+        crop_face = frame[y_f:y_f + h_f, x_f:x_f + w_f]
         # Inside face we are trying to detect smile
         smile = smile_cascade.detectMultiScale(crop_face,
                                                scaleFactor=1.5,
                                                minNeighbors=20)
-        for x, y, w, h in smile:
-            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 3)
+        for x_s, y_s, w_s, h_s in smile:
+            # Mark the smile
+            cv2.rectangle(frame, (x_f + x_s, y_f + y_s),
+                          (x_f + x_s + w_s, y_f + y_s + h_s), (0, 0, 255), 3)
 
+    # Show the video
     cv2.imshow('Output', frame)
     key = cv2.waitKey(1)
 
