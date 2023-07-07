@@ -77,7 +77,7 @@ class ObjectDetection:
                                                                     y_shape)
                 cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 3)
                 cv2.putText(frame, model.names[int(data[5])], (x2, y2),
-                            cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255))
+                            cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 3)
 
         return frame
 
