@@ -58,6 +58,25 @@ class ObjectDetection:
         results = model(frame)
 
         # Labels and Coordinates
-        labels, co_ordinates = results.xyxyn[0][:,
-                                                -1], results.xyxyn[0][:, :-1]
-        return labels, co_ordinates
+        output = results.xyxyn[0]
+        return output
+
+    # Let's plot the box
+    def plot_boxes(self, results, frame):
+        '''
+        Take a frame and its results as input and plot the bounding boxs and labels on the frame
+        '''
+        output = results
+        y_shape, x_shape = frame.shape[0], frame.shape[1]
+
+        # Let's plot the output
+        for data in output:
+            if data[4] >= 0.4:
+                x1, y1, x2, y2 = int(data[0] * x_shape), int(
+                    data[1] * y_shape), int(data[2] * x_shape), int(data[3] *
+                                                                    y_shape)
+                cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 3)
+                cv2.putText(frame, data[6], (x2, y2), cv2.FONT_HERSHEY_SIMPLEX,
+                            (0, 0, 255))
+
+        return frame
