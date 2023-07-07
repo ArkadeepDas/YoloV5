@@ -35,11 +35,29 @@ class ObjectDetection:
             return 0
         return frame
 
+    # Load model from pytorch
     def load_model(self):
         '''
         Load YoloV5 model from pytorch hub.
         '''
         model = torch.hub.load('ultralytics/yolov5',
                                'yolov5s',
-                               pretrained=True,
-                               device=self.device)
+                               pretrained=True)
+        return model
+
+    # Takes single frame as a input and gives the output from YoloV5
+    def score_frame(self, frame):
+        '''
+        Take single frame as a input and predict is using YoloV5
+        : parameter frame: single frame from out video
+        : return: lebels and coordinates of objects detected by YoloV5
+        '''
+        self.model.to(self.device)
+        frame = [frame]
+        model = self.load_model()
+        results = model(frame)
+
+        # Labels and Coordinates
+        labels, co_ordinates = results.xyxyn[0][:,
+                                                -1], results.xyxyn[0][:, :-1]
+        return labels, co_ordinates
