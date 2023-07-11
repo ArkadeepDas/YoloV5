@@ -38,5 +38,6 @@ if len(images_path) == len(labels_path):
                 cv2.rectangle(image, (co_x1, co_y1), (co_x2, co_y2),
                               (0, 255, 0), 3)
         # Show image with bounding box
-        cv2.imwrite('Image.jpg', image)
-        break
+        cv2.imwrite(
+            'D:\Deep_Learning\Algorithm\YOLOV5\Gun_Detection_Annotation_Images\\'
+            + file_name + '.jpg', image)
